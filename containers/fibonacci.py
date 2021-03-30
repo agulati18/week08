@@ -52,13 +52,13 @@ class Fib:
     >>> list(Fib(5))
     [1, 1, 2, 3, 5]
     '''
-    def _init_(self, n=None):
+    def __init__(self, n=None):
         self.n = n
 
-    def _iter_(self):
+    def __iter__(self):
         return FibIter(self.n)
 
-    def _repr_(self):
+    def __repr__(self):
         if self.n is None:
             return 'Fib()'
         else:
@@ -69,14 +69,14 @@ class FibIter:
     '''
     This is the iterator helper class for the Fib class.
     '''
-    def _init_(self, n):
+    def __init__(self, n):
         self.n = n
         self.i = 0
         self.el0 = 1
         self.el1 = 1
         self.el2 = None
 
-    def _next_(self):
+    def __next__(self):
         if self.n is not None and self.n <= self.i:
             raise StopIteration
         elif self.i < 2:
