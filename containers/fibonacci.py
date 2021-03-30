@@ -86,8 +86,8 @@ class FibIter:
             self.i += 1
             self.el2 = self.el1 + self.el0
             self.el0 = self.el1
-            self.el1 = self.el
-        return self.el2
+            self.el1 = self.el2
+            return self.el2
 
 
 def fib_yield(n=None):
