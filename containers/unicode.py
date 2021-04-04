@@ -65,7 +65,7 @@ class NormalizedStr:
         Returns the character at position `index`.
         The expression `a[b]` desugars to `a.__getitem__(b)`.
         '''
-        return self.text.__getitem__index
+        return self.text.__getitem__(index)
 
     def lower(self):
         '''
