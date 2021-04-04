@@ -84,7 +84,7 @@ class NormalizedStr:
         Returns a copy of `self` with `b` appended to the end.
         The expression `a + b` gets desugared into `a.__add__(b)`.
         '''
-        filler = self.text + unicodedata.normalize(self.nom, str(b))
+        filler = self.text + unicodedata.normalize(self.norm, str(b))
         word = unicodedata.normalize(self.norm, filler)
         return NormalizedStr(word, self.norm)
 
