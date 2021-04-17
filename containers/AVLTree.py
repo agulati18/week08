@@ -66,7 +66,7 @@ class AVLTree(BST):
         if node is None or node.right is None:
             return node
 
-        noda = Node(node.value)
+        noda = Node(node.right.value)
         noda.right = node.right.right
 
         leftnode = Node(node.value)
@@ -105,10 +105,18 @@ class AVLTree(BST):
         FIXME:
         Implement this function.
         '''
-        if self.root is None:
+        if not self.root:
             self.root = Node(value)
+            return
+        if value == self.root.value:
+            return
         else:
-            self.root = AVLTree._insert(value, self.root)
+            self._insert(value, self.root)
+            if not self.is_avl_satisfied():
+                self.root = self.rebalance(self.root)
+                if not self.is_avl_satisfied():
+                    self.root = self.rebalance(self.root)
+            return
 
     @staticmethod
     def _insert(value, node):
