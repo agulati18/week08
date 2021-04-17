@@ -69,11 +69,11 @@ class AVLTree(BST):
         noda = Node(node.value)
         noda.right = node.right.right
 
-        leftNode = Node(node.value)
-        leftNode.left = node.left
-        leftNode.right = node.right.left
+        leftnode = Node(node.value)
+        leftnode.left = node.left
+        leftnode.right = node.right.left
 
-        noda.left = leftNode
+        noda.left = leftnode
 
         return noda
 
