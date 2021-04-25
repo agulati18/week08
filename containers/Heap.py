@@ -146,10 +146,10 @@ class Heap(BinaryTree):
         if node.left is None and node.right is None:
             return node
 
-        a = node.right is None
+        x = node.right is None
         y = node.left is None
 
-        if node.left and (a or node.left.value <= node.right.value):
+        if node.left and (x or node.left.value <= node.right.value):
             if node.left.value < node.value:
                 parent_new = node.left.value
                 left_new = node.value
