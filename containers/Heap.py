@@ -146,7 +146,7 @@ class Heap(BinaryTree):
         if node.left is None and node.right is None:
             return node
 
-        x = node.right is None
+        a = node.right is None
         y = node.left is None
 
         if node.left and (x or node.left.value <= node.right.value):
