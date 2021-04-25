@@ -1,27 +1,14 @@
-
-from week08.BinaryTree import BinaryTree, Node
+from containers.BinaryTree import BinaryTree, Node
 
 
 class Heap(BinaryTree):
-    '''
-    FIXME:
-    Heap is currently not a subclass of BinaryTree.
-    You should make the necessary changes in the class declaration line above
-    and in the constructor below.
-    '''
-
     def __init__(self, xs=None):
-        '''
-        FIXME:
-        If xs is a list (i.e. xs is not None),
-        then each element of xs needs to be inserted into the Heap.
-        '''
         super().__init__()
         if xs:
             self.insert_list(xs)
 
     def __repr__(self):
-        return type(self).__name__ + '(' + str(self.to_list('inorder')) + ')'
+        return type(self).__name__+'('+str(self.to_list('inorder'))+')'
 
     def is_heap_satisfied(self):
         if self.root:
@@ -30,10 +17,6 @@ class Heap(BinaryTree):
 
     @staticmethod
     def _is_heap_satisfied(node):
-        '''
-        FIXME:
-        Implement this method.
-        '''
         left = True
         right = True
         if node is None:
@@ -55,7 +38,7 @@ class Heap(BinaryTree):
         '''
         if self.root is None:
             self.root = Node(value)
-            self.root.descendants = 1
+            self.root.descendents = 1
         else:
             self.root = Heap._insert(self.root, value)
 
@@ -67,94 +50,83 @@ class Heap(BinaryTree):
         if node.left and node.right:
             node.left = Heap._insert(node.left, value)
             if node.value > node.left.value:
-                return Heap._up_heap_bubble(node, value)
+                return Heap._move_up(node, value)
 
         if node.left is None:
             node.left = Node(value)
             if node.value > node.left.value:
-                return Heap._up_heap_bubble(node, value)
+                return Heap._move_up(node, value)
 
         elif node.right is None:
             node.right = Node(value)
             if node.value > node.right.value:
-                return Heap._up_heap_bubble(node, value)
+                return Heap._move_up(node, value)
+
+        return node
 
     @staticmethod
-    def _up_heap_bubble(node, value):
+    def _move_up(node, value):
         if Heap._is_heap_satisfied(node) is True:
             return node
-
         if node.left and node.left.value > node.value:
-            node.left = Heap._up_heap_bubble(node.left, value)
+            node.left = Heap._move_up(node.left, value)
         if node.right and node.right.value > node.value:
-            node.right = Heap._up_heap_bubble(node.right, value)
-
-        if node.left:
-            if node.left.value == value:
-                parent_new = node.left.value
-                left_new = node.value
-
-                node.value = parent_new
-                node.left.value = left_new
+            node.right = Heap._move_up(node.right, value)
 
         if node.right:
             if node.right.value == value:
                 parent_new = node.right.value
                 right_new = node.value
-
                 node.value = parent_new
                 node.right.value = right_new
+
+        if node.left:
+            if node.left.value == value:
+                parent_new = node.left.value
+                left_new = node.value
+                node.value = parent_new
+                node.left.value = left_new
 
         return node
 
     def insert_list(self, xs):
         '''
         Given a list xs, insert each element of xs into self.
-
-        FIXME:
-        Implement this function.
         '''
         for x in xs:
             self.insert(x)
 
     def find_smallest(self):
-        '''
-        Returns the smallest value in the tree.
+        if self.root:
+            return Heap._find_smallest(self.root)
 
-        FIXME:
-        Implement this function.
-        '''
-        if Heap.is_heap_satisfied(self):
-            return self.root.value
+    @staticmethod
+    def _find_smallest(node):
+        return node.value
 
     def remove_min(self):
-        '''
-        Removes the minimum value from the Heap.
-        If the heap is empty, it does nothing.
-        '''
         if self.root is None:
             return None
         elif self.root.left is None and self.root.right is None:
             self.root = None
         else:
-            rightest = Heap._findright(self.root)
+            right_replace = Heap._find_right(self.root)
             self.root = Heap._remove(self.root)
-            if rightest == self.root.value:
+            if right_replace == self.root.value:
                 return
             else:
-                self.root.value = rightest
-
+                self.root.value = right_replace
             if Heap._is_heap_satisfied(self.root) is False:
-                return Heap._downheapbubble(self.root)
+                return Heap._move_down(self.root)
 
     @staticmethod
-    def _findright(node):
+    def _find_right(node):
         if node.left is None and node.right is None:
             return node.value
         elif node.right:
-            return Heap._findRight(node.right)
+            return Heap._find_right(node.right)
         elif node.left:
-            return Heap._findRight(node.left)
+            return Heap._find_right(node.left)
 
     @staticmethod
     def _remove(node):
@@ -170,25 +142,27 @@ class Heap(BinaryTree):
         return node
 
     @staticmethod
-    def _downheapbubble(node):
+    def _move_down(node):
         condition1 = (node.left.value <= node.right.value)
         condition2 = (node.right.value <= node.left.value)
 
         if node.left is None and node.right is None:
             return node
+
         if node.left and (node.right is None or condition1):
             if node.left.value < node.value:
-                x1 = node.value
-                x2 = node.left.value
-                node.value = x2
-                node.left.value = x1
-            node.left = Heap._downheapbubble(node.left)
+                parent_new = node.left.value
+                left_new = node.value
+                node.value = parent_new
+                node.left.value = left_new
+            node.left = Heap._move_down(node.left)
+
         elif node.right and (node.left is None or condition2):
             if node.right.value < node.value:
-                x1 = node.value
-                x2 = node.right.value
-                node.value = x2
-                node.right.value = x1
-            node.right = Heap._downheapbubble(node.right)
+                parent_new = node.right.value
+                right_new = node.value
+                node.value = parent_new
+                node.right.value = right_new
+            node.right = Heap._move_down(node.right)
 
         return node
