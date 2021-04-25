@@ -1,6 +1,7 @@
 
 from week08.BinaryTree import BinaryTree, Node
 
+
 class Heap(BinaryTree):
     '''
     FIXME:
