@@ -65,26 +65,26 @@ class Heap(BinaryTree):
         if node.left and node.right:
             node.left = Heap._insert(node.left, value)
             if node.value > node.left.value:
-                return Heap._upHeapBubble(node, value)
+                return Heap._upheapbubble(node, value)
         if node.left is None:
             node.left = Node(value)
             if node.value > node.left.value:
-                return Heap._upHeapBubble(node, value)
+                return Heap._upheapbubble(node, value)
         elif node.right is None:
             node.right = Node(value)
             if node.value > node.right.value:
-                return Heap._upHeapBubble(node, value)
+                return Heap._upheapbubble(node, value)
         return node
 
     @staticmethod
-    def _upheapBubble(node, value):
+    def _upheapbubble(node, value):
         if Heap._is_heap_satisfied(node) is True:
             return node
 
         if node.left and node.left.value > node.value:
-            node.left = Heap._upHeapBubble(node.left, value)
+            node.left = Heap._upheapbubble(node.left, value)
         if node.right and node.right.value > node.value:
-            node.right = Heap._upHeapBubble(node.right, value)
+            node.right = Heap._upheapbubble(node.right, value)
 
         if node.left:
             if node.left.value == value:
@@ -129,7 +129,7 @@ class Heap(BinaryTree):
         elif self.root.left is None and self.root.right is None:
             self.root = None
         else:
-            rightest = Heap._findRight(self.root)
+            rightest = Heap._findright(self.root)
             self.root = Heap._remove(self.root)
             if rightest == self.root.value:
                 return
@@ -137,10 +137,10 @@ class Heap(BinaryTree):
                 self.root.value = rightest
 
             if Heap._is_heap_satisfied(self.root) is False:
-                return Heap._downHeapBubble(self.root)
+                return Heap._downheapbubble(self.root)
 
     @staticmethod
-    def _findRight(node):
+    def _findright(node):
         if node.left is None and node.right is None:
             return node.value
         elif node.right:
@@ -162,7 +162,7 @@ class Heap(BinaryTree):
         return node
 
     @staticmethod
-    def _downHeapBubble(node):
+    def _downheapbubble(node):
         condition1 = (node.left.value <= node.right.value)
         condition2 = (node.right.value <= node.left.value)
 
@@ -174,13 +174,13 @@ class Heap(BinaryTree):
                 x2 = node.left.value
                 node.value = x2
                 node.left.value = x1
-            node.left = Heap._downHeapBubble(node.left)
+            node.left = Heap._downheapbubble(node.left)
         elif node.right and (node.left is None or condition2):
             if node.right.value < node.value:
                 x1 = node.value
                 x2 = node.right.value
                 node.value = x2
                 node.right.value = x1
-            node.right = Heap._downHeapBubble(node.right)
+            node.right = Heap._downheapbubble(node.right)
 
         return node
