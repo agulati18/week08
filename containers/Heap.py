@@ -1,5 +1,5 @@
-from containers.BinaryTree import BinaryTree, Node
 
+from week08.BinaryTree import BinaryTree, Node
 
 class Heap(BinaryTree):
     '''
