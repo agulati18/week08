@@ -66,40 +66,45 @@ class Heap(BinaryTree):
         if node.left and node.right:
             node.left = Heap._insert(node.left, value)
             if node.value > node.left.value:
-                return Heap.upheapbubble(node, value)
+                return Heap._up_heap_bubble(node, value)
 
         if node.left is None:
             node.left = Node(value)
             if node.value > node.left.value:
-                return Heap.upheapbubble(node, value)
+                return Heap._up_heap_bubble(node, value)
 
         elif node.right is None:
             node.right = Node(value)
             if node.value > node.right.value:
-                return Heap._upheapbubble(node, value)
+                return Heap._up_heap_bubble(node, value)
 
     @staticmethod
-    def _upheapbubble(node, value):
+    def _up_heap_bubble(node, value):
         if Heap._is_heap_satisfied(node) is True:
             return node
 
         if node.left and node.left.value > node.value:
-            node.left = Heap._upheapbubble(node.left, value)
+            node.left = Heap._up_heap_bubble(node.left, value)
         if node.right and node.right.value > node.value:
-            node.right = Heap._upheapbubble(node.right, value)
+            node.right = Heap._up_heap_bubble(node.right, value)
 
         if node.left:
             if node.left.value == value:
-                x1 = node.value
-                x2 = node.left.value
-                node.value = x2
-                node.left.value = x1
+                parent_new = node.left.value
+                left_new = node.value
+
+                node.value = parent_new
+                node.left.value = left_new
+
         if node.right:
             if node.right.value == value:
-                x1 = node.value
-                x2 = node.right.value
-                node.value = x2
-                node.right.value = x1
+                parent_new = node.right.value
+                right_new = node.value
+
+                node.value = parent_new
+                node.right.value = right_new
+
+        return node
 
     def insert_list(self, xs):
         '''
