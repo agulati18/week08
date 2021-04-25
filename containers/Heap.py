@@ -143,26 +143,30 @@ class Heap(BinaryTree):
 
     @staticmethod
     def _move_down(node):
-        condition1 = (node.left.value <= node.right.value)
-        condition2 = (node.right.value <= node.left.value)
-
         if node.left is None and node.right is None:
             return node
 
-        if node.left and (node.right is None or condition1):
+        x = node.right is None
+        y = node.left is None
+
+        if node.left and (x or node.left.value <= node.right.value):
             if node.left.value < node.value:
                 parent_new = node.left.value
                 left_new = node.value
+
                 node.value = parent_new
                 node.left.value = left_new
+
             node.left = Heap._move_down(node.left)
 
-        elif node.right and (node.left is None or condition2):
+        elif node.right and (y or node.right.value <= node.left.value):
             if node.right.value < node.value:
                 parent_new = node.right.value
                 right_new = node.value
+
                 node.value = parent_new
                 node.right.value = right_new
+
             node.right = Heap._move_down(node.right)
 
         return node
