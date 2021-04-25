@@ -8,7 +8,7 @@ class Heap(BinaryTree):
             self.insert_list(xs)
 
     def __repr__(self):
-        return type(self).__name__+'('+str(self.to_list('inorder'))+')'
+        return type(self).__name__ + '(' + str(self.to_list('inorder')) + ')'
 
     def is_heap_satisfied(self):
         if self.root:
